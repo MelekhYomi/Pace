@@ -1,122 +1,84 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React, { useState } from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // State management using useState hook
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState('');
+
+  // Event Handlers for Counter
+  const handleIncrease = () => setCount((prevCount) => prevCount + 1);
+  const handleDecrease = () => setCount((prevCount) => prevCount - 1);
+  const handleReset = () => setCount(0); // Bonus feature
+
+  // Event Handler for Input Field
+  const handleNameChange = (event) => setName(event.target.value);
+
+  // Helper values for conditional styling and rendering
+  const isEven = count % 2 === 0;
+  const currentYear = new Date().getFullYear();
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+    <div className="app-container">
+      {/* Header & Bio */}
+      <header className="header">
+        <h1>My First React App</h1>
+        <p className="bio">
+          Hi! I am a passionate frontend software engineer who loves building clean, accessible, and high-performance interactive web applications.
+        </p>
+      </header>
+
+      <main className="main-content">
+        {/* Counter Section */}
+        <section className="card counter-section">
+          <h2>Counter</h2>
+          <div className="count-display">{count}</div>
+          
+          <div className="button-group">
+            <button onClick={handleIncrease} className="btn btn-increase">
+              Increase
+            </button>
+            <button onClick={handleDecrease} className="btn btn-decrease">
+              Decrease
+            </button>
+            {/* Bonus: Reset Button */}
+            <button onClick={handleReset} className="btn btn-reset">
+              Reset
+            </button>
+          </div>
+
+          {/* Conditional Rendering for Parity */}
+          <p className="parity-message">
+            {isEven ? 'Even number' : 'Odd number'}
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        </section>
 
-      <div className="ticks"></div>
+        {/* Dynamic Greeting Section */}
+        <section className="card greeting-section">
+          <h2>Personalized Greeting</h2>
+          <input
+            type="text"
+            placeholder="Type your name here..."
+            value={name}
+            onChange={handleNameChange}
+            className="name-input"
+          />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          {/* Conditional Rendering for Greeting */}
+          {name.trim() !== '' && (
+            <h3 className="greeting-text">
+              Hello, {name}! Welcome to my React app
+            </h3>
+          )}
+        </section>
+      </main>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Bonus: Footer with Current Year */}
+      <footer className="footer">
+        <p>&copy; {currentYear} My First React App. All rights reserved.</p>
+      </footer>
+    </div>
+  );
 }
 
-export default App
+export default App;
